@@ -6,11 +6,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="619.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
+<AnchorPane fx:id="customerPane" prefHeight="619.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
     <children>
         <Label alignment="CENTER" prefHeight="67.0" prefWidth="804.0" style="-fx-background-color: #1a237e;" text="Customers" textFill="WHITE">
             <font>
@@ -80,6 +82,18 @@
           <font>
               <Font name="System Bold" size="14.0" />
           </font>
+      </JFXButton>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="73.0" onAction="#backButtonOnAction" prefHeight="37.0" prefWidth="44.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
     </children>
 </AnchorPane>

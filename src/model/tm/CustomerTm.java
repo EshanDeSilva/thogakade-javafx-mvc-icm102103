@@ -2,6 +2,7 @@ package model.tm;
 
 import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class CustomerTm {
+public class CustomerTm extends RecursiveTreeObject<CustomerTm> {
     private String id;
     private String name;
     private String address;

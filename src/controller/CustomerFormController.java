@@ -1,19 +1,26 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import db.DBConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Customer;
+import model.tm.CustomerTm;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +28,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -44,7 +54,7 @@ public class CustomerFormController implements Initializable {
     private AnchorPane customerPane;
 
     @FXML
-    private JFXTreeTableView<?> tblCustomer;
+    private JFXTreeTableView<CustomerTm> tblCustomer;
 
     @FXML
     private JFXTextField txtAddress;
@@ -71,7 +81,14 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void clearButtonOnAction(ActionEvent event) {
+        clearFields();
+    }
 
+    private void clearFields() {
+        generateId();
+        txtName.clear();
+        txtAddress.clear();
+        txtSalary.clear();
     }
 
     @FXML
@@ -93,6 +110,8 @@ public class CustomerFormController implements Initializable {
 
             if (pstm.executeUpdate()>0) {
                 new Alert(Alert.AlertType.INFORMATION,"Customer Saved..!").show();
+                loadTable();
+                clearFields();
             }else{
                 new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
             }
@@ -105,12 +124,118 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void updateButtonOnAction(ActionEvent event) {
+        Customer customer = new Customer(
+                lblCustId.getText(),
+                txtName.getText(),
+                txtAddress.getText(),
+                Double.parseDouble(txtSalary.getText())
+        );
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("UPDATE customer SET name=? , address=?, salary=? WHERE id=?");
+            pstm.setString(1,customer.getName());
+            pstm.setString(2,customer.getAddress());
+            pstm.setDouble(3,customer.getSalary());
+            pstm.setString(4,customer.getId());
+
+            if (pstm.executeUpdate()>0){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Updated..!").show();
+                clearFields();
+                loadTable();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colCustId.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
+        colCustName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new TreeItemPropertyValueFactory<>("address"));
+        colSalary.setCellValueFactory(new TreeItemPropertyValueFactory<>("salary"));
+        colOption.setCellValueFactory(new TreeItemPropertyValueFactory<>("btn"));
         generateId();
+        loadTable();
+
+        tblCustomer.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
+            if (newValue!=null){
+                setData(newValue);
+            }
+        });
+    }
+
+    private void setData(TreeItem<CustomerTm> value) {
+        lblCustId.setText(value.getValue().getId());
+        txtName.setText(value.getValue().getName());
+        txtAddress.setText(value.getValue().getAddress());
+        txtSalary.setText(String.valueOf(value.getValue().getSalary()));
+    }
+
+    private void loadTable() {
+        ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
+        try {
+            List<Customer> list = new ArrayList<>();
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT * FROM customer");
+            ResultSet resultSet = pstm.executeQuery();
+
+            while (resultSet.next()) {
+                list.add(new Customer(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDouble(4)
+                ));
+            }
+
+            for (Customer customer:list) {
+                JFXButton btn = new JFXButton("Delete");
+                btn.setBackground(Background.fill(Color.rgb(227,92,92)));
+
+                btn.setOnAction(actionEvent -> {
+                    try {
+                        PreparedStatement pst = connection.prepareStatement("DELETE FROM customer WHERE id=?");
+                        pst.setString(1,customer.getId());
+                        Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete " + customer.getId() + " customer ? ", ButtonType.YES, ButtonType.NO).showAndWait();
+                        if (buttonType.get() == ButtonType.YES){
+                            if (pst.executeUpdate()>0){
+                                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted..!").show();
+                                loadTable();
+                                generateId();
+                            }else{
+                                new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                tmList.add(new CustomerTm(
+                        customer.getId(),
+                        customer.getName(),
+                        customer.getAddress(),
+                        customer.getSalary(),
+                        btn
+                ));
+            }
+
+            TreeItem<CustomerTm> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
+            tblCustomer.setRoot(treeItem);
+            tblCustomer.setShowRoot(false);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void generateId() {

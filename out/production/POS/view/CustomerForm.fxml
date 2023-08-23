@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="619.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
+    <children>
+        <Label alignment="CENTER" prefHeight="67.0" prefWidth="804.0" style="-fx-background-color: #1a237e;" text="Customers" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <Separator layoutX="13.0" layoutY="573.0" prefHeight="8.0" prefWidth="777.0" style="-fx-background-color: #d9e3f0;" />
+      <JFXTreeTableView layoutX="21.0" layoutY="353.0" prefHeight="211.0" prefWidth="762.0">
+         <columns>
+            <TreeTableColumn prefWidth="138.39998817443848" text="Cuustomer ID" />
+            <TreeTableColumn prefWidth="207.2000732421875" text="Name" />
+            <TreeTableColumn prefWidth="225.59994506835938" text="Address" />
+            <TreeTableColumn prefWidth="190.4000244140625" text="Salary" />
+         </columns>
+      </JFXTreeTableView>
+      <Text layoutX="50.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID : " wrappingWidth="109.33672332763672">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <JFXTextField layoutX="256.0" layoutY="150.0" prefHeight="26.0" prefWidth="190.0" />
+      <Label layoutX="256.0" layoutY="104.0" prefHeight="33.0" prefWidth="135.0" text="C001">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Text layoutX="50.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name : " wrappingWidth="109.33672332763672">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <JFXTextField layoutX="256.0" layoutY="198.0" prefHeight="26.0" prefWidth="230.0" />
+      <Text layoutX="50.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address :" wrappingWidth="109.33672332763672">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <JFXTextField layoutX="256.0" layoutY="246.0" prefHeight="26.0" prefWidth="190.0" />
+      <Text layoutX="50.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salary : " wrappingWidth="109.33672332763672">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <JFXButton layoutX="677.0" layoutY="285.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #1976d2;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="677.0" layoutY="239.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #4abc4f;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="677.0" layoutY="190.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #d54040;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="677.0" layoutY="143.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
+      <JFXTextField layoutX="21.0" layoutY="319.0" prefHeight="26.0" prefWidth="182.0" promptText="Item Code" />
+      <JFXButton layoutX="212.0" layoutY="317.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
+          <font>
+              <Font name="System Bold" size="14.0" />
+          </font>
+      </JFXButton>
+    </children>
+</AnchorPane>

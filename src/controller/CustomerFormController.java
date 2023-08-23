@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -75,14 +76,20 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void saveButtonOnAction(ActionEvent event) {
+        Customer customer = new Customer(
+                lblCustId.getText(),
+                txtName.getText(),
+                txtAddress.getText(),
+                Double.parseDouble(txtSalary.getText())
+        );
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             String sql = "INSERT INTO customer VALUES(?,?,?,?)";
             PreparedStatement pstm = connection.prepareStatement(sql);
-            pstm.setString(1,lblCustId.getText());
-            pstm.setString(2,txtName.getText());
-            pstm.setString(3,txtAddress.getText());
-            pstm.setDouble(4,Double.parseDouble(txtSalary.getText()));
+            pstm.setString(1,customer.getId());
+            pstm.setString(2,customer.getName());
+            pstm.setString(3,customer.getAddress());
+            pstm.setDouble(4,customer.getSalary());
 
             if (pstm.executeUpdate()>0) {
                 new Alert(Alert.AlertType.INFORMATION,"Customer Saved..!").show();

@@ -31,7 +31,6 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
         <JFXTextField layoutX="21.0" layoutY="85.0" prefHeight="26.0" prefWidth="182.0" promptText="Order ID" />
         <JFXButton layoutX="212.0" layoutY="83.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
             <font>
@@ -45,5 +44,6 @@
             <TreeTableColumn prefWidth="316.8000793457031" text="Customer Name" />
          </columns>
       </JFXTreeTableView>
+      <Text layoutX="127.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved (by Sithila Sihan Somaratne, a student in that institute)" wrappingWidth="568.73681640625" />
     </children>
 </AnchorPane>

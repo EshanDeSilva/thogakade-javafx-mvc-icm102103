@@ -16,18 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Customer;
 import model.tm.CustomerTm;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -109,7 +104,7 @@ public class CustomerFormController implements Initializable {
             pstm.setDouble(4,customer.getSalary());
 
             if (pstm.executeUpdate()>0) {
-                new Alert(Alert.AlertType.INFORMATION,"Customer Saved..!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Customer has been saved successfully!").show();
                 loadTable();
                 clearFields();
             }else{
@@ -139,7 +134,7 @@ public class CustomerFormController implements Initializable {
             pstm.setString(4,customer.getId());
 
             if (pstm.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Updated..!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Customer  has been updated successfully!").show();
                 clearFields();
                 loadTable();
             }else{
@@ -197,7 +192,8 @@ public class CustomerFormController implements Initializable {
 
             for (Customer customer:list) {
                 JFXButton btn = new JFXButton("Delete");
-                btn.setBackground(Background.fill(Color.rgb(227,92,92)));
+                btn.setStyle("-fx-background-color: red;");
+                btn.setTextFill(Color.WHITE);
 
                 btn.setOnAction(actionEvent -> {
                     try {
@@ -206,7 +202,7 @@ public class CustomerFormController implements Initializable {
                         Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete " + customer.getId() + " customer ? ", ButtonType.YES, ButtonType.NO).showAndWait();
                         if (buttonType.get() == ButtonType.YES){
                             if (pst.executeUpdate()>0){
-                                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted..!").show();
+                                new Alert(Alert.AlertType.INFORMATION,"Customer has been deleted successfully!").show();
                                 loadTable();
                                 generateId();
                             }else{
@@ -231,9 +227,7 @@ public class CustomerFormController implements Initializable {
             tblCustomer.setRoot(treeItem);
             tblCustomer.setShowRoot(false);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -250,10 +244,29 @@ public class CustomerFormController implements Initializable {
             }else {
                 lblCustId.setText("C001");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+    }
+    @FXML
+    void searchCustomer(ActionEvent event) {
+        String id = txtSearch.getText();
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement stm = connection.createStatement();
+            String SQL= "SELECT * FROM Customer WHERE id='" + id + "'";
+            ResultSet rst = stm.executeQuery(SQL);
+            Customer customer = rst.next() ? new Customer(id, rst.getString("name"), rst.getString("address"),rst.getDouble("salary")) : null;
+            if(customer!=null){
+                lblCustId.setText(customer.getId());
+                txtName.setText(customer.getName());
+                txtAddress.setText(customer.getAddress());
+                txtSalary.setText(customer.getSalary()+"");
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Customer not found...").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
         }
     }
 }

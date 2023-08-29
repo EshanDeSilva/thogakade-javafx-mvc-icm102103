@@ -45,6 +45,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Text layoutX="261.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
+      <Text layoutX="112.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved (by Sithila Sihan Somaratne, a student in that institute)" wrappingWidth="568.73681640625" />
    </children>
 </AnchorPane>

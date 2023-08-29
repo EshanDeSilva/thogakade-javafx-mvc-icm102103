@@ -22,7 +22,7 @@
         <Separator layoutX="13.0" layoutY="573.0" prefHeight="8.0" prefWidth="777.0" style="-fx-background-color: #d9e3f0;" />
       <JFXTreeTableView fx:id="tblCustomer" layoutX="21.0" layoutY="353.0" prefHeight="211.0" prefWidth="762.0">
          <columns>
-            <TreeTableColumn fx:id="colCustId" prefWidth="105.5999698638916" text="Cuustomer ID" />
+            <TreeTableColumn fx:id="colCustId" prefWidth="105.5999698638916" text="Customer ID" />
             <TreeTableColumn fx:id="colCustName" prefWidth="175.99999237060547" text="Name" />
             <TreeTableColumn fx:id="colAddress" prefWidth="188.79998779296875" text="Address" />
             <TreeTableColumn fx:id="colSalary" prefWidth="144.80014038085938" text="Salary" />
@@ -72,9 +72,8 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </JFXButton>
-      <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
-      <JFXTextField fx:id="txtSearch" layoutX="21.0" layoutY="319.0" prefHeight="26.0" prefWidth="182.0" promptText="Item Code" />
-      <JFXButton layoutX="212.0" layoutY="317.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
+      <JFXTextField fx:id="txtSearch" layoutX="21.0" layoutY="319.0" prefHeight="26.0" prefWidth="182.0" promptText="Customer Code" />
+      <JFXButton layoutX="212.0" layoutY="317.0" onAction="#searchCustomer" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
           <font>
               <Font name="System Bold" size="14.0" />
           </font>
@@ -91,5 +90,6 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <Text layoutX="118.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved (by Sithila Sihan Somaratne, a student in that institute)" wrappingWidth="568.73681640625" />
     </children>
 </AnchorPane>

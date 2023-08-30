@@ -200,6 +200,7 @@ public class CustomerFormController implements Initializable {
             for (Customer customer:list) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(227,92,92)));
+                btn.setTextFill(Color.rgb(255,255,255));
 
                 btn.setOnAction(actionEvent -> {
                     try {

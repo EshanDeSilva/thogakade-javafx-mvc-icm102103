@@ -14,16 +14,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Customer;
 import model.Item;
 import model.tm.CustomerTm;
 import model.tm.ItemTm;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -148,6 +151,8 @@ public class ItemFormController implements Initializable {
             for (Item item:list) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(227,92,92)));
+                btn.setTextFill(Color.rgb(255,255,255));
+
 
                 btn.setOnAction(actionEvent -> {
                     try {

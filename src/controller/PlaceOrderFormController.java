@@ -1,8 +1,7 @@
 package controller;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +11,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.tm.CartTm;
+import model.tm.CustomerTm;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,22 +37,22 @@ public class PlaceOrderFormController implements Initializable {
     private JFXComboBox cmbItemCode;
 
     @FXML
-    private TreeTableColumn<?, ?> colAmount;
+    private TreeTableColumn colAmount;
 
     @FXML
-    private TreeTableColumn<?, ?> colDescription;
+    private TreeTableColumn colDescription;
 
     @FXML
-    private TreeTableColumn<?, ?> colItemCode;
+    private TreeTableColumn colItemCode;
 
     @FXML
-    private TreeTableColumn<?, ?> colOption;
+    private TreeTableColumn colOption;
 
     @FXML
-    private TreeTableColumn<?, ?> colQty;
+    private TreeTableColumn colQty;
 
     @FXML
-    private TreeTableColumn<?, ?> colUnitPrice;
+    private TreeTableColumn colUnitPrice;
 
     @FXML
     private Label lblOrderId;
@@ -65,7 +70,7 @@ public class PlaceOrderFormController implements Initializable {
     private AnchorPane placeOrderPane;
 
     @FXML
-    private JFXTreeTableView<?> tblOrder;
+    private JFXTreeTableView<CartTm> tblOrder;
 
     @FXML
     private JFXTextField txtCustomerName;
@@ -79,6 +84,7 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     private JFXTextField txtSearch;
 
+    ObservableList<CartTm> tmList = FXCollections.observableArrayList();
 
     public void backButtonOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) placeOrderPane.getScene().getWindow();
@@ -90,13 +96,72 @@ public class PlaceOrderFormController implements Initializable {
         stage.show();
     }
 
+    private double findTotal(){
+        double total = 0;
+        for (CartTm tm:tmList) {
+            total += tm.getAmount();
+        }
+        return total;
+    }
+
     @FXML
     void addToCartButtonOnAction(ActionEvent event) {
+        boolean isExist = false;
+        for (CartTm tm:tmList) {
+            if (tm.getCode().equals(cmbItemCode.getValue().toString())){
+                tm.setQty(tm.getQty()+Integer.parseInt(txtQty.getText()));
+                tm.setAmount(tm.getQty()*tm.getAmount());
+                isExist = true;
+            }
+        }
 
+        if (!isExist){
+            JFXButton btn = new JFXButton("Delete");
+            btn.setBackground(Background.fill(Color.rgb(227,92,92)));
+            btn.setTextFill(Color.rgb(255,255,255));
+            btn.setStyle("-fx-font-weight: BOLD");
+
+
+
+            CartTm cartTm = new CartTm(
+                    cmbItemCode.getValue().toString(),
+                    txtDescription.getText(),
+                    Double.parseDouble(lblUnitPrice.getText()),
+                    Integer.parseInt(txtQty.getText()),
+                    Double.parseDouble(lblUnitPrice.getText())*Integer.parseInt(txtQty.getText()),
+                    btn
+            );
+
+            btn.setOnAction(actionEvent -> {
+                tmList.remove(cartTm);
+                lblTotal.setText(String.format("%.2f",findTotal()));
+                tblOrder.refresh();
+            });
+
+            tmList.add(cartTm);
+
+            TreeItem<CartTm> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
+            tblOrder.setRoot(treeItem);
+            tblOrder.setShowRoot(false);
+        }
+        lblTotal.setText(String.format("%.2f",findTotal()));
+        tblOrder.refresh();
     }
 
     @FXML
     void clearButtonOnAction(ActionEvent event) {
+        clearFields();
+    }
+
+    private void clearFields() {
+        cmbCustomerId.setValue("");
+        cmbItemCode.setValue("");
+        txtCustomerName.clear();
+        txtSearch.clear();
+        txtDescription.clear();
+        lblUnitPrice.setText("0.00");
+        lblQtyOnHand.setText("");
+        txtQty.clear();
 
     }
 
@@ -112,6 +177,14 @@ public class PlaceOrderFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        colItemCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("code"));
+        colDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("desc"));
+        colUnitPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("unitPrice"));
+        colQty.setCellValueFactory(new TreeItemPropertyValueFactory<>("qty"));
+        colAmount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
+        colOption.setCellValueFactory(new TreeItemPropertyValueFactory<>("btn"));
+
         generateId();
         loadCustomerId();
         loadItemCodes();

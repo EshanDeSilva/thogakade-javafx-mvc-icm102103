@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -18,15 +19,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Customer;
+import model.Order;
+import model.OrderDetails;
 import model.tm.CartTm;
 import model.tm.CustomerTm;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceOrderFormController implements Initializable {
@@ -167,8 +172,66 @@ public class PlaceOrderFormController implements Initializable {
 
     @FXML
     void placeOrderButtonOnAction(ActionEvent event) {
+        List<OrderDetails> detailsList = new ArrayList<>();
 
+        for (CartTm tm:tmList) {
+            detailsList.add(new OrderDetails(
+                    lblOrderId.getText(),
+                    tm.getCode(),
+                    tm.getQty(),
+                    tm.getUnitPrice()
+            ));
+        }
+
+        Order order = new Order(
+                lblOrderId.getText(),
+                LocalDate.now(),
+                cmbCustomerId.getValue().toString()
+        );
+
+        boolean isOrderPlaced = true;
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            String sql = "INSERT INTO orders VALUES(?,?,?)";
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1,order.getId());
+            pstm.setDate(2, Date.valueOf(order.getDate()));
+            pstm.setString(3,order.getCustomerId());
+
+            if (pstm.executeUpdate()>0) {
+                for (OrderDetails detail:detailsList) {
+                    String query = "INSERT INTO orderdetail VALUES(?,?,?,?)";
+                    PreparedStatement ptm = connection.prepareStatement(query);
+                    ptm.setString(1,detail.getOrderId());
+                    ptm.setString(2, detail.getItemCode());
+                    ptm.setInt(3,detail.getQty());
+                    ptm.setDouble(4,detail.getUnitPrice());
+
+                    if (ptm.executeUpdate()<=0){
+                        isOrderPlaced = false;
+                    }
+
+                }
+            }else{
+                isOrderPlaced = false;
+                new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+            }
+
+            if (isOrderPlaced){
+                new Alert(Alert.AlertType.INFORMATION,"Order Placed..!").show();
+                tmList.clear();
+                tblOrder.refresh();
+                clearFields();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     void updateButtonOnAction(ActionEvent event) {

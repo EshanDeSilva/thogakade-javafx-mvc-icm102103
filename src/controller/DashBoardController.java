@@ -52,7 +52,13 @@ public class DashBoardController implements Initializable {
 
     @FXML
     void orderButtonOnAction(ActionEvent event) {
-
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/OrderDetailsForm.fxml"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 
     @FXML

@@ -57,7 +57,13 @@ public class DashBoardController implements Initializable {
 
     @FXML
     void placeOrderButtonOnAction(ActionEvent event) {
-
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/PlaceOrderForm.fxml"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 
     @Override

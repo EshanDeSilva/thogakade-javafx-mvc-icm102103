@@ -21,14 +21,14 @@
             </font>
         </Label>
         <Separator layoutX="13.0" layoutY="573.0" prefHeight="8.0" prefWidth="777.0" style="-fx-background-color: #d9e3f0;" />
-        <JFXTreeTableView layoutX="21.0" layoutY="313.0" prefHeight="211.0" prefWidth="804.0">
+        <JFXTreeTableView fx:id="tblOrder" layoutX="21.0" layoutY="313.0" prefHeight="211.0" prefWidth="804.0">
             <columns>
-                <TreeTableColumn prefWidth="116.79998207092285" text="Item Code" />
-                <TreeTableColumn prefWidth="194.39996337890625" text="Description" />
-                <TreeTableColumn prefWidth="144.79998779296875" text="Unit Price" />
-                <TreeTableColumn prefWidth="94.39999389648438" text="QTY" />
-            <TreeTableColumn prefWidth="147.20001220703125" text="Amount" />
-            <TreeTableColumn prefWidth="110.4000244140625" text="Option" />
+                <TreeTableColumn fx:id="colItemCode" prefWidth="116.79998207092285" text="Item Code" />
+                <TreeTableColumn fx:id="colDescription" prefWidth="194.39996337890625" text="Description" />
+                <TreeTableColumn fx:id="colUnitPrice" prefWidth="144.79998779296875" text="Unit Price" />
+                <TreeTableColumn fx:id="colQty" prefWidth="94.39999389648438" text="QTY" />
+            <TreeTableColumn fx:id="colAmount" prefWidth="147.20001220703125" text="Amount" />
+            <TreeTableColumn fx:id="colOption" prefWidth="110.4000244140625" text="Option" />
             </columns>
         </JFXTreeTableView>
         <Text layoutX="22.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID : " wrappingWidth="109.33672332763672">
@@ -36,7 +36,7 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Text>
-        <Label layoutX="147.0" layoutY="109.0" prefHeight="33.0" prefWidth="135.0" text="D001">
+        <Label fx:id="lblOrderId" layoutX="147.0" layoutY="109.0" prefHeight="33.0" prefWidth="135.0" text="D001">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -46,43 +46,42 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Text>
-        <JFXTextField layoutX="585.0" layoutY="105.0" prefHeight="26.0" prefWidth="230.0" />
+        <JFXTextField fx:id="txtDescription" layoutX="585.0" layoutY="105.0" prefHeight="26.0" prefWidth="230.0" />
         <Text layoutX="456.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description :" wrappingWidth="109.33672332763672">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Text>
-        <JFXTextField layoutX="587.0" layoutY="212.0" prefHeight="26.0" prefWidth="86.0" />
+        <JFXTextField fx:id="txtQty" layoutX="587.0" layoutY="212.0" prefHeight="26.0" prefWidth="86.0" />
         <Text layoutX="457.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QTY : " wrappingWidth="109.33672332763672">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Text>
-        <JFXButton layoutX="713.0" layoutY="277.0" prefHeight="34.0" prefWidth="109.0" style="-fx-background-color: #1976d2;" text="Add to Cart" textFill="WHITE">
+        <JFXButton layoutX="713.0" layoutY="277.0" onAction="#addToCartButtonOnAction" prefHeight="34.0" prefWidth="109.0" style="-fx-background-color: #1976d2;" text="Add to Cart" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton layoutX="614.0" layoutY="278.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #4abc4f;" text="Update" textFill="WHITE">
+        <JFXButton layoutX="614.0" layoutY="278.0" onAction="#updateButtonOnAction" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #4abc4f;" text="Update" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton layoutX="514.0" layoutY="277.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Clear" textFill="WHITE">
+        <JFXButton layoutX="514.0" layoutY="277.0" onAction="#clearButtonOnAction" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Clear" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
         <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
-        <JFXTextField layoutX="21.0" layoutY="279.0" prefHeight="26.0" prefWidth="182.0" promptText="Item Code" />
-      <JFXComboBox layoutX="585.0" layoutY="67.0" prefHeight="26.0" prefWidth="135.0" />
+        <JFXTextField fx:id="txtSearch" layoutX="21.0" layoutY="279.0" prefHeight="26.0" prefWidth="182.0" promptText="Item Code" />
+      <JFXComboBox fx:id="cmbItemCode" layoutX="584.0" layoutY="68.0" prefHeight="26.0" prefWidth="135.0" />
       <Text layoutX="22.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID :" wrappingWidth="109.33672332763672">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <JFXComboBox layoutX="149.0" layoutY="151.0" prefHeight="26.0" prefWidth="135.0" />
-      <JFXTextField layoutX="587.0" layoutY="140.0" prefHeight="26.0" prefWidth="86.0" />
+      <JFXComboBox fx:id="cmbCustomerId" layoutX="149.0" layoutY="151.0" prefHeight="26.0" prefWidth="135.0" />
       <Text layoutX="456.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QTY On Hand : " wrappingWidth="116.53673553466797">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -93,13 +92,13 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <JFXTextField layoutX="149.0" layoutY="190.0" prefHeight="26.0" prefWidth="201.0" />
+      <JFXTextField fx:id="txtCustomerName" layoutX="149.0" layoutY="190.0" prefHeight="26.0" prefWidth="201.0" />
       <Text layoutX="456.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Price : " wrappingWidth="109.33672332763672">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Label layoutX="584.0" layoutY="175.0" prefHeight="33.0" prefWidth="135.0" text="0.00">
+      <Label fx:id="lblUnitPrice" layoutX="584.0" layoutY="175.0" prefHeight="33.0" prefWidth="135.0" text="0.00">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -109,12 +108,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Label layoutX="158.0" layoutY="532.0" prefHeight="33.0" prefWidth="135.0" text="0.00">
+      <Label fx:id="lblTotal" layoutX="158.0" layoutY="532.0" prefHeight="33.0" prefWidth="135.0" text="0.00">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <JFXButton layoutX="696.0" layoutY="530.0" prefHeight="34.0" prefWidth="127.0" style="-fx-background-color: #e87525;" text="Place Order" textFill="WHITE">
+      <JFXButton layoutX="696.0" layoutY="530.0" onAction="#placeOrderButtonOnAction" prefHeight="34.0" prefWidth="127.0" style="-fx-background-color: #e87525;" text="Place Order" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -131,5 +130,10 @@
               </ImageView>
           </graphic>
       </JFXButton>
+      <Label fx:id="lblQtyOnHand" layoutX="584.0" layoutY="136.0" prefHeight="33.0" prefWidth="135.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

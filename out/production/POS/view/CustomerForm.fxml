@@ -74,11 +74,6 @@
       </JFXButton>
       <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
       <JFXTextField fx:id="txtSearch" layoutX="21.0" layoutY="319.0" prefHeight="26.0" prefWidth="182.0" promptText="Item Code" />
-      <JFXButton layoutX="212.0" layoutY="317.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
-          <font>
-              <Font name="System Bold" size="14.0" />
-          </font>
-      </JFXButton>
       <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="73.0" onAction="#backButtonOnAction" prefHeight="37.0" prefWidth="44.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />

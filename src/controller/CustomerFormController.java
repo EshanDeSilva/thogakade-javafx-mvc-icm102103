@@ -89,6 +89,8 @@ public class CustomerFormController implements Initializable {
         txtName.clear();
         txtAddress.clear();
         txtSalary.clear();
+        txtSearch.clear();
+        tblCustomer.refresh();
     }
 
     @FXML

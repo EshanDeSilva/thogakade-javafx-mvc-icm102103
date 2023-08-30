@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -42,7 +41,13 @@ public class DashBoardController implements Initializable {
 
     @FXML
     void itemButtonOnAction(ActionEvent event) {
-
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/ItemForm.fxml"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 
     @FXML

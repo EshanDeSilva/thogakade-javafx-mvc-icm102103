@@ -1,6 +1,5 @@
 package model.tm;
 
-import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;

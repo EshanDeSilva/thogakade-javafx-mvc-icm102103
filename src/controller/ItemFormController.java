@@ -6,9 +6,12 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import db.DBConnection;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +29,7 @@ import model.Item;
 import model.tm.CustomerTm;
 import model.tm.ItemTm;
 
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -37,8 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class ItemFormController implements Initializable {
+
     @FXML
     private TreeTableColumn colCode;
 
@@ -214,11 +220,6 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void searchButtonOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void updateButtonOnAction(ActionEvent event) {
         Item item = new Item(
                 lblCode.getText(),
@@ -265,6 +266,21 @@ public class ItemFormController implements Initializable {
                 setData(newValue);
             }
         });
+
+        txtSearch.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                tblItem.setPredicate(new Predicate<TreeItem<ItemTm>>() {
+                    @Override
+                    public boolean test(TreeItem<ItemTm> treeItem) {
+                        boolean flag = treeItem.getValue().getCode().contains(newValue) ||
+                                treeItem.getValue().getDescription().contains(newValue);
+                        return flag;
+                    }
+                });
+            }
+        });
+
     }
 
     private void setData(TreeItem<ItemTm> value) {

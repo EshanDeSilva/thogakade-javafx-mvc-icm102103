@@ -2,8 +2,6 @@ package model;
 
 import lombok.*;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -11,6 +9,6 @@ import java.time.LocalDate;
 @ToString
 public class Order {
     private String id;
-    private LocalDate date;
+    private String date;
     private String customerId;
 }

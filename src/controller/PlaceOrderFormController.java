@@ -185,7 +185,7 @@ public class PlaceOrderFormController implements Initializable {
 
         Order order = new Order(
                 lblOrderId.getText(),
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 cmbCustomerId.getValue().toString()
         );
         Connection connection = null;

@@ -6,11 +6,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="619.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderDetailsFormController">
+<AnchorPane fx:id="orderDetailsPane" prefHeight="619.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderDetailsFormController">
     <children>
         <Label alignment="CENTER" prefHeight="67.0" prefWidth="804.0" style="-fx-background-color: #1a237e;" text="OrderDetails" textFill="WHITE">
             <font>
@@ -26,24 +28,27 @@
                 <TreeTableColumn prefWidth="190.4000244140625" text="Amount" />
             </columns>
         </JFXTreeTableView>
-        <JFXButton layoutX="696.0" layoutY="81.0" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #d54040;" text="Delete" textFill="WHITE">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </JFXButton>
         <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
-        <JFXTextField layoutX="21.0" layoutY="85.0" prefHeight="26.0" prefWidth="182.0" promptText="Order ID" />
-        <JFXButton layoutX="212.0" layoutY="83.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #697689;" text="Search" textFill="WHITE">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </JFXButton>
-      <JFXTreeTableView layoutX="21.0" layoutY="127.0" prefHeight="211.0" prefWidth="762.0">
+        <JFXTextField layoutX="600.0" layoutY="92.0" prefHeight="26.0" prefWidth="182.0" promptText="Order ID" />
+      <JFXTreeTableView fx:id="tblOrder" layoutX="21.0" layoutY="127.0" prefHeight="211.0" prefWidth="762.0">
          <columns>
-            <TreeTableColumn prefWidth="195.19997596740723" text="Order ID" />
-            <TreeTableColumn prefWidth="251.20001220703125" text="Date" />
-            <TreeTableColumn prefWidth="316.8000793457031" text="Customer Name" />
+            <TreeTableColumn fx:id="colOrderId" prefWidth="170.39998817443848" text="Order ID" />
+            <TreeTableColumn fx:id="colDate" prefWidth="184.79998779296875" text="Date" />
+            <TreeTableColumn fx:id="colCustName" prefWidth="245.60006713867188" text="Customer Name" />
+            <TreeTableColumn fx:id="colOption" prefWidth="159.99997558593748" text="Option" />
          </columns>
       </JFXTreeTableView>
+        <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="73.0" onAction="#backButtonOnAction" prefHeight="37.0" prefWidth="44.0" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+            <graphic>
+                <ImageView fitHeight="27.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resources/img/back.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </JFXButton>
     </children>
 </AnchorPane>

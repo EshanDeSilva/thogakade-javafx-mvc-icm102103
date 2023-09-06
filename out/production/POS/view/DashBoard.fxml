@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -14,7 +16,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <Label alignment="CENTER" prefHeight="67.0" prefWidth="761.0" style="-fx-background-color: #1a237e;" text="ThogaKade" textFill="WHITE" underline="true">
+      <Label alignment="CENTER" prefHeight="67.0" prefWidth="761.0" style="-fx-background-color: #1a237e;" text="SuperMarket" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>
@@ -46,5 +48,20 @@
          </font>
       </Label>
       <Text layoutX="261.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
+      <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/img/user.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblDate1" layoutX="66.0" layoutY="22.0" prefHeight="23.0" prefWidth="110.0" text="iCET" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+<!--      <ImageView fitHeight="253.0" fitWidth="329.0" layoutX="336.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">-->
+<!--         <image>-->
+<!--            <Image url="@../resources/img/chart.png" />-->
+<!--         </image>-->
+<!--      </ImageView>-->
    </children>
 </AnchorPane>

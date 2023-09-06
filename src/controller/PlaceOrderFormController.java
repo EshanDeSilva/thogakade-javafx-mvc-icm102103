@@ -171,7 +171,7 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     @FXML
-    void placeOrderButtonOnAction(ActionEvent event) {
+    void placeOrderButtonOnAction(ActionEvent event) throws SQLException {
         List<OrderDetails> detailsList = new ArrayList<>();
 
         for (CartTm tm:tmList) {
@@ -188,10 +188,12 @@ public class PlaceOrderFormController implements Initializable {
                 LocalDate.now(),
                 cmbCustomerId.getValue().toString()
         );
-
+        Connection connection = null;
         boolean isOrderPlaced = true;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
             String sql = "INSERT INTO orders VALUES(?,?,?)";
             PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setString(1,order.getId());
@@ -215,20 +217,24 @@ public class PlaceOrderFormController implements Initializable {
             }else{
                 isOrderPlaced = false;
                 new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+                connection.rollback();
             }
 
             if (isOrderPlaced){
                 new Alert(Alert.AlertType.INFORMATION,"Order Placed..!").show();
+                connection.commit();
                 tmList.clear();
                 tblOrder.refresh();
                 clearFields();
             }else{
                 new Alert(Alert.AlertType.ERROR,"Something went wrong..!").show();
+                connection.rollback();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            connection.rollback();
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
         }
     }
 

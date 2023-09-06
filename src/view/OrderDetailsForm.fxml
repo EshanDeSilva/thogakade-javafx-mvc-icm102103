@@ -20,12 +20,12 @@
             </font>
         </Label>
         <Separator layoutX="13.0" layoutY="573.0" prefHeight="8.0" prefWidth="777.0" style="-fx-background-color: #d9e3f0;" />
-        <JFXTreeTableView layoutX="21.0" layoutY="353.0" prefHeight="211.0" prefWidth="762.0">
+        <JFXTreeTableView fx:id="tblDetails" layoutX="21.0" layoutY="353.0" prefHeight="211.0" prefWidth="762.0">
             <columns>
-                <TreeTableColumn prefWidth="151.99996376037598" text="Item Code" />
-                <TreeTableColumn prefWidth="253.60003662109375" text="Description" />
-                <TreeTableColumn prefWidth="167.20004272460938" text="QTY" />
-                <TreeTableColumn prefWidth="190.4000244140625" text="Amount" />
+                <TreeTableColumn fx:id="colItemCode" prefWidth="151.99996376037598" text="Item Code" />
+                <TreeTableColumn fx:id="colDesc" prefWidth="253.60003662109375" text="Description" />
+                <TreeTableColumn fx:id="colQty" prefWidth="167.20004272460938" text="QTY" />
+                <TreeTableColumn fx:id="colAmount" prefWidth="190.4000244140625" text="Amount" />
             </columns>
         </JFXTreeTableView>
         <Text layoutX="271.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 - iCET All Rights Reserved" wrappingWidth="239.73681640625" />
